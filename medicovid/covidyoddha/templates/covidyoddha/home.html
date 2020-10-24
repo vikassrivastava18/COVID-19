@@ -1,0 +1,15 @@
+{% extends "covidyoddha/base.html" %}
+{% block content %}
+    {% for covid_yoddha in yoddha %}
+        <article class="media content-section">
+          <div class="media-body">
+            <div class="article-metadata">
+              <a class="mr-2" href="#">{{ covid_yoddha.name }}</a>
+              <small class="text-muted">{{ covid_yoddha.date }}</small>
+            </div>
+            <h2><a class="article-title" href="#">{{ covid_yoddha.title }}</a></h2>
+            <p class="article-content">{{ covid_yoddha.content }}</p>
+          </div>
+        </article>
+    {% endfor %}
+{% endblock content %}
