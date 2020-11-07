@@ -43,6 +43,8 @@ SHARED_APPS = [
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.admin',
+    'django.contrib.staticfiles',
+
 
 ]
 
@@ -55,6 +57,7 @@ TENANT_APPS = ['django.contrib.auth',
                 'django.contrib.staticfiles',
                 'covidyoddha',
                 'users',
+                'crispy_forms',
                ]
 
 INSTALLED_APPS = list(set(SHARED_APPS + TENANT_APPS))
@@ -161,4 +164,20 @@ DATABASE_ROUTERS = (
     'django_tenants.routers.TenantSyncRouter',
 )
 
-#SITE_ID = 4
+SITE_ID = 1
+
+account_sid = 'AC2ada64bbf0631ec1ec778efcb405c1b3'
+auth_token = '804b432d43528cbacda1af5ec166b7f5'
+
+from django.contrib.messages import constants as messages
+
+
+MESSAGE_TAGS = {
+        messages.DEBUG: 'alert-secondary',
+        messages.INFO: 'alert-info',
+        messages.SUCCESS: 'alert-success',
+        messages.WARNING: 'alert-warning',
+        messages.ERROR: 'alert-danger',
+ }
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'

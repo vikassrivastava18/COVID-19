@@ -50,9 +50,9 @@ a.article-title:hover {
 }
 
 .article-img {
-  height: 65px;
-  width: 65px;
-  margin-right: 16px;
+  height: 10px;
+  width: 10px;
+  margin-right: 5px;
 }
 
 .article-metadata {
@@ -73,8 +73,8 @@ a.article-title:hover {
 }
 
 .account-img {
-  height: 125px;
-  width: 125px;
+  height: 12px;
+  width: 12px;
   margin-right: 20px;
   margin-bottom: 16px;
 }
