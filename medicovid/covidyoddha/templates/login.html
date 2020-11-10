@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% block style %}
+{% load static %}
+{% endblock %}
+
+{% block content %}
+{% if form.errors %}
+<p>Your username and password didn't match. Please try again.</p>
+{% endif %}
+
+{% if next %}
+{% if user.is_authenticated %}
+<p>Your account doesn't have access to the page. To proceed,
+  please login with an account that has access.</p>
+{% else %}
+{% endif %}
+{% endif %}
+
+<div class="container">
+  <div class="row" style="margin-top:18vh;">
+    <div class="col-lg-4 col-md-6 mx-auto">
+      <div class="card card-login">
+
+        <form class="form" method="post" action="{% url 'login' %}">
+          <div class="card-header card-header-primary text-center">
+            <h4 class="card-title">Login</h4>
+          </div>
+          <div class="card-body">
+            {% csrf_token %}
+            <span class="bmd-form-group">
+              <div class="input-group">
+                {{ form.username }}
+              </div>
+            </span>
+            <span class="bmd-form-group">
+              <div class="input-group">
+                {{ form.password }}
+              </div>
+            </span>
+          </div>
+          <div class="text-center mt-3">
+            <input class="btn btn-outline-primary" type="submit" value="login" />
+            <input type="hidden" name="next" value="{{ next }}" />
+          </div>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+{% endblock %}
