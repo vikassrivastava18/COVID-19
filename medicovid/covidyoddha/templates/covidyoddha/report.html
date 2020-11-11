@@ -1,0 +1,20 @@
+{% extends "covidyoddha/base.html" %}
+{% block content %}
+    <article class="media content-section pt-5">
+      <img class="rounded-circle article-img" width="90" height="90" src="/static/covid_yoddha.jpg">
+      <div class="media-body">
+        <div class="article-metadata">
+          <h2><a class="mr-2" style="color:blue">Welcome {{ patient_name }} to Covid Yoddha</a></h2>
+          <h4>Patient Details:</h4>
+          <h4><small class="text-muted">Name : {{ patient_name }}</small></h4>
+          <h5><small class="text-muted">Email : {{ patient_email }}</small></h5>
+          <h5><small class="text-muted">Mobile : {{ patient_mobile }}</small></h5>
+          <p class="text-muted">Age : {{ patient_age }} , Gender : {{ patient_gender }}</p>
+        </div>
+          <a href="{% url 'covidyoddha-home' %}"><button class="btn btn-outline-secondary" >Back</button></a>
+          <a href="{% url 'print-report' %} " target="_blank" class="btn btn-secondary "><i class="fas fa-print"></i>Print Report</a>
+      </div>
+
+    </article>
+
+{% endblock content %}

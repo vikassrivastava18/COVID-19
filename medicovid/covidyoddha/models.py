@@ -19,6 +19,7 @@ class Patient(models.Model):
         choices= GENDER,
         help_text='Please select your Gender'
     )
+    patient_otp = models.PositiveIntegerField()
 
     def __str__(self):
         return self.patient_name

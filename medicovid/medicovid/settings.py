@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,42 +21,46 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 't2o92$u(+1fg_sy$1y1qo2j4a+b90^k(i0-*tl=pdi!paq-cf-'
+SECRET_KEY = 't!wdb2oy_v1$gf3)4dc)&_v!75g6!se&0ic5ngv9!&#tdm2iaq'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ["*"]
+
 
 # Application definition
 
-SHARED_APPS = (
+SHARED_APPS = [
     'django_tenants',  # mandatory
     'customer', # you must list the app where your tenant model resides in
+
     'django.contrib.contenttypes',
+
     # everything below here is optional
     'django.contrib.auth',
     'django.contrib.sessions',
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.admin',
-)
+    'django.contrib.staticfiles',
 
-TENANT_APPS = (
-    # The following Django contrib apps must be in TENANT_APPS
-    'django.contrib.contenttypes',
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.sessions',
-    'django.contrib.sites',
-    'django.contrib.messages',
-    # your tenant-specific apps
-    'medicovid',
-    'covidyoddha'
-)
 
-INSTALLED_APPS = list(SHARED_APPS) + [app for app in TENANT_APPS if app not in SHARED_APPS]
+]
 
+TENANT_APPS = ['django.contrib.auth',
+                'django.contrib.sites',
+                'django.contrib.sessions',
+                'django.contrib.contenttypes',
+                'django.contrib.messages',
+                'django.contrib.admin',
+                'django.contrib.staticfiles',
+                'covidyoddha',
+                'users',
+                'crispy_forms',
+               ]
+
+INSTALLED_APPS = list(set(SHARED_APPS + TENANT_APPS))
 
 MIDDLEWARE = [
     'django_tenants.middleware.main.TenantMainMiddleware',
@@ -77,7 +82,6 @@ TEMPLATES = [
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
-                'django.template.context_processors.request',
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
@@ -93,20 +97,21 @@ WSGI_APPLICATION = 'medicovid.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
+
 DATABASES = {
     'default': {
         'ENGINE': 'django_tenants.postgresql_backend',
         'NAME': 'postgres',
         'USER': 'postgres',
-        'PASSWORD': 'helloworld@2020',
-        'HOST': 'localhost',
-        'PORT': '5432',
+        'PASSWORD': '1234',
     }
 }
-
-DATABASE_ROUTERS = (
-    'django_tenants.routers.TenantSyncRouter',
-)
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
@@ -145,10 +150,34 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = '/static/'
+STATIC_DIR = os.path.join(BASE_DIR,'static')
+
+STATICFILES_DIRS = [
+    STATIC_DIR,
+]
 
 TENANT_MODEL = "customer.Client" # app.Model
 TENANT_DOMAIN_MODEL = "customer.Domain" # app.Model
 
+DATABASE_ROUTERS = (
+    'django_tenants.routers.TenantSyncRouter',
+)
+
 SITE_ID = 1
 
-#  hello world !
+account_sid = 'AC2ada64bbf0631ec1ec778efcb405c1b3'
+auth_token = '804b432d43528cbacda1af5ec166b7f5'
+
+from django.contrib.messages import constants as messages
+
+
+MESSAGE_TAGS = {
+        messages.DEBUG: 'alert-secondary',
+        messages.INFO: 'alert-info',
+        messages.SUCCESS: 'alert-success',
+        messages.WARNING: 'alert-warning',
+        messages.ERROR: 'alert-danger',
+ }
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
