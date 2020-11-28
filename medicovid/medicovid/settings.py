@@ -99,7 +99,7 @@ WSGI_APPLICATION = 'medicovid.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django_tenants.postgresql_backend',
-        'NAME': 'postgres',
+        'NAME': 'medicovid',
         'USER': 'postgres',
         'PASSWORD': 'helloworld@2020',
         'HOST': 'localhost',

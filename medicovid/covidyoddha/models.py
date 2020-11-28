@@ -11,8 +11,6 @@ GENDER = (
 
 
 class Patient(models.Model):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid1,
-                          help_text='Unique ID for this particular patient')
     patient_name = models.CharField(max_length=100)
     patient_mobile = models.CharField(max_length=13)
     patient_email = models.EmailField()
@@ -57,3 +55,16 @@ class Staff(models.Model):
 
     def __str__(self):
         return self.staff.username
+
+
+test_time_in_minute = 15   #15 Minutes
+hospital_opens_at = 10   # 10 am
+hospital_close_at = 6      # 6 pm
+
+
+class Appointment(models.Model):
+    patient = models.OneToOneField(Patient, on_delete= models.SET_NULL, null=True)
+    time = models.DateTimeField()
+
+    def __str__(self):
+        return str(self.time)

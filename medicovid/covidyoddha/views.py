@@ -28,3 +28,4 @@ class CreateReportView(LoginRequiredMixin, CreateView):
     template_name = "addReport.html"
     success_url = reverse_lazy('staff')
     # def valid
+
