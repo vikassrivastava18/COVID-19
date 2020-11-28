@@ -8,32 +8,13 @@ from django.http import HttpResponse
 from .utils import render_to_pdf
 from datetime import datetime
 from io import BytesIO
-from .forms import mobileOTPForm
-
-# yoddha = [
-#
-#     {
-#         'name': 'Vikas',
-#         'title': 'Covid Yoddha 1',
-#         'content': 'Some little help from our side to Medical team',
-#         'date':'Octobar 23, 2020'
-#     },
-#     {
-#         'name': 'Datta',
-#         'title': 'Covid Yoddha 2',
-#         'content': 'My little contribute to Medical team',
-#         'date':'Octobar 24, 2020'
-#     }
-# ]
-
 
 
 def home(request):
-    #patient = Patient.objects.all()
     if request.method == 'POST':
         request_mobile = request.POST['inputMobile']
         patient = Patient.objects.filter(patient_mobile=str(request_mobile)).first()
-
+        print(patient)
         if patient == None:
             messages.error(request, f'OPPS!, That mobile number is not registered.')
             return render(request, 'covidyoddha/home.html')
@@ -54,7 +35,8 @@ def home(request):
             Thank you For Using Covid-Yoddha Website !
             Hello Mr. { patient_name } Your Secure Device OTP is - {otp}
             '''
-            sent_otp = send_otp('AC2ada64bbf0631ec1ec778efcb405c1b3', '804b432d43528cbacda1af5ec166b7f5', msg_body,'+14158775175','+91'+request_mobile)
+            print(msg_body)
+            sent_otp = send_otp('AC454eb3b87b77a6113b0cbe038d71f699', '2e133945b41c8443a99dcc98dcb15def', msg_body,'+13158190802','+91'+request_mobile)
             request.session["sent_otp"] = str(sent_otp)
 
             messages.success(request, f'Your OTP Send Successfully !!!')
@@ -93,6 +75,7 @@ def report(request):
         return render(request, 'covidyoddha/report.html',context)
     else:
         return render(request, 'covidyoddha/home.html')
+
 
 def GeneratePdf(request):
 
