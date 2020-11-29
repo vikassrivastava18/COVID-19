@@ -174,8 +174,8 @@ DATABASE_ROUTERS = (
 
 SITE_ID = 1
 
-account_sid = 'AC2ada64bbf0631ec1ec778efcb405c1b3'
-auth_token = '804b432d43528cbacda1af5ec166b7f5'
+account_sid = '#'
+auth_token = '#'
 
 from django.contrib.messages import constants as messages
 
