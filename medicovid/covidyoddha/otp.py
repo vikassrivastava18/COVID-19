@@ -3,21 +3,6 @@ import twilio
 from twilio.rest import Client
 import random # generate random number
 otp = random.randint(1000,9999)
-#print("Your OTP is - ",otp)
-# Your Account Sid and Auth Token from twilio.com/console
-# DANGER! This is insecure. See http://twil.io/secure
-# account_sid = 'AC2ada64bbf0631ec1ec778efcb405c1b3'
-# auth_token = '804b432d43528cbacda1af5ec166b7f5'
-# client = Client(account_sid, auth_token)
-#
-# message = client.messages.create(
-#          body='Hello Mr. Datta Your Secure Device OTP is - ' + str(otp) + 'now your mobile is hacked!\n Byby...',
-#          from_='+14158775175',
-#          to='+919763529046'
-#      )
-#
-# print(message.sid)
-
 
 account_sid = ''
 auth_token = ''
@@ -27,7 +12,7 @@ def send_otp(account_sid, auth_token, body, from_, to_):
     message = client.messages.create(
         #body='Hello Mr. Datta Your Secure Device OTP is - ' + str(otp) + 'now your mobile is hacked!\n Byby...',
         body = body,
-        from_='+14158775175',
+        from_='+#',
         to=to_
     )
 

@@ -60,7 +60,7 @@ def home(request):
             Thank you For Using Covid-Yoddha Website !
             Hello Mr. { patient_name } Your Secure Device OTP is - {otp}
             '''
-            sent_otp = send_otp('AC2ada64bbf0631ec1ec778efcb405c1b3', '804b432d43528cbacda1af5ec166b7f5', msg_body,'+14158775175','+91'+request_mobile)
+            sent_otp = send_otp('#', '#', msg_body,'+#','+91'+request_mobile)
             request.session["sent_otp"] = str(sent_otp)
 
             messages.success(request, f'Your OTP Send Successfully !!!')
