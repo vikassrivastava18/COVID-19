@@ -109,11 +109,9 @@ WSGI_APPLICATION = 'medicovid.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django_tenants.postgresql_backend',
-        'NAME': 'medicovid',
+        'NAME': 'postgres',
         'USER': 'postgres',
-        'PASSWORD': 'helloworld@2020',
-        'HOST': 'localhost',
-        'PORT': '5432',
+        'PASSWORD': '1234',
     }
 }
 
@@ -174,8 +172,6 @@ DATABASE_ROUTERS = (
 
 SITE_ID = 1
 
-account_sid = 'AC2ada64bbf0631ec1ec778efcb405c1b3'
-auth_token = '804b432d43528cbacda1af5ec166b7f5'
 
 from django.contrib.messages import constants as messages
 
