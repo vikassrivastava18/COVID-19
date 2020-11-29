@@ -1,5 +1,5 @@
 from django.core.files import File
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .models import Patient
 from .otp import send_otp , otp
 from django.contrib import messages
@@ -9,6 +9,12 @@ from .utils import render_to_pdf
 from datetime import datetime
 from django.db.models import Q
 from io import BytesIO
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views import View
+from .forms import PatientCreationForm, ReportCreationForm
+from django.views.generic.edit import CreateView
+from django.urls import reverse_lazy
+
 
 def home(request):
     if request.method == 'POST':
@@ -38,7 +44,8 @@ def home(request):
             Thank you For Using Covid-Yoddha Website !
             Hello Mr. { patient_name } Your Secure Device OTP is - {otp}
             '''
-            sent_otp = send_otp('#', '#', msg_body,'+#','+91'+request_mobile)
+
+            sent_otp = send_otp('AC2ada64bbf0631ec1ec778efcb405c1b3', '818440649467b203ce7a7115584aca89', msg_body,'+14158775175','+91'+request_mobile)
             request.session["sent_otp"] = str(sent_otp)
 
             messages.success(request, f'Your OTP Send Successfully !!!')
@@ -101,3 +108,26 @@ def GeneratePdf(request):
 
 def about(request):
     return render(request, 'covidyoddha/about.html', { 'title' : 'About'})
+
+
+class StaffView(LoginRequiredMixin, View):
+
+    def get(self, request):
+        form_dict = {
+            'patientForm': PatientCreationForm()
+        }
+        return render(request, 'staff.html', form_dict)
+
+
+class CreatePatientView(LoginRequiredMixin, CreateView):
+    form_class = PatientCreationForm
+    template_name = "addPatient.html"
+    success_url = reverse_lazy('staff')
+
+
+class CreateReportView(LoginRequiredMixin, CreateView):
+    form_class = ReportCreationForm
+    template_name = "addReport.html"
+    success_url = reverse_lazy('staff')
+
+
