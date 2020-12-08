@@ -1,14 +1,12 @@
-{% extends 'base.html' %}
-{% block style %}
+{% extends 'covidyoddha/base.html' %}
 {% load static %}
-{% endblock %}
 
 {% block content %}
 
-<h3>Welcome staff - {{ request.user.username }}</h3>
+<h3 class="mt-5 ml-5">Welcome staff - {{ request.user.username }}</h3>
 <br><br>
-<a href="{% url 'createPatient' %}"><button>+Add Patient</button></a>&nbsp;
-<a href="{% url 'createReport' %}"><button>+Add Patient</button></a>
+<!--<a href="{% url 'createPatient' %}"><button>+Add Patient</button></a>&nbsp;-->
+<!--<a href="{% url 'createReport' %}"><button>+Add Report</button></a>-->
 
 
 {% endblock %}

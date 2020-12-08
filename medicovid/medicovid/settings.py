@@ -43,7 +43,8 @@ SHARED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.admin',
-    'django.contrib.staticfiles'
+    'django.contrib.staticfiles',
+    'crispy_forms',
 )
 
 TENANT_APPS = (
@@ -55,6 +56,7 @@ TENANT_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'crispy_forms',
     # your tenant-specific apps
     'medicovid',
     'covidyoddha'
@@ -161,7 +163,9 @@ STATICFILES_DIRS = [
 
 STATIC_URL = '/static/'
 
-LOGIN_REDIRECT_URL = '/staff/'
+#LOGIN_REDIRECT_URL = '/staff/'
+LOGIN_REDIRECT_URL = '/account/'
+LOGIN_URL = '/account/'
 
 TENANT_MODEL = "customer.Client" # app.Model
 TENANT_DOMAIN_MODEL = "customer.Domain" # app.Model

@@ -30,10 +30,19 @@ class PatientCreationForm(ModelForm):
 
     class Meta:
         model = Patient
-        fields = ['patient_name', 'patient_email', 'patient_age', 'patient_mobile', 'patient_gender']
+        fields = ['patient_first_name', 'patient_last_name','patient_email', 'patient_age', 'patient_mobile', 'patient_gender']
 
-    patient_name = forms.CharField(
-        label="Patient's Name",
+    patient_first_name = forms.CharField(
+        label="Patient First Name",
+        widget=forms.TextInput(
+            attrs={
+                "class": "form-control",
+            }
+        )
+    )
+
+    patient_last_name = forms.CharField(
+        label="Patient Last Name",
         widget=forms.TextInput(
             attrs={
                 "class": "form-control",

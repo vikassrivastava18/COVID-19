@@ -11,19 +11,19 @@ GENDER = (
 
 
 class Patient(models.Model):
-    patient_name = models.CharField(max_length=100)
+    patient_first_name = models.CharField(max_length=100)
+    patient_last_name = models.CharField(max_length=100)
     patient_mobile = models.CharField(max_length=13)
-    patient_email = models.EmailField()
+    patient_email = models.EmailField(null=True)
     patient_age = models.IntegerField()
     patient_gender = models.CharField(
         max_length=1,
         choices= GENDER,
         help_text='Please select your Gender'
     )
-    # patient_otp = models.PositiveIntegerField()
 
     def __str__(self):
-        return self.patient_name
+        return self.patient_first_name
 
 
 RESULT = (

@@ -1,12 +1,103 @@
+<!--{% load static %}-->
+<!--<!doctype html>-->
+<!--<html lang="en">-->
+<!--  <head>-->
+<!--    &lt;!&ndash; Required meta tags &ndash;&gt;-->
+<!--    <meta charset="utf-8">-->
+<!--    <base href="/">-->
+<!--    &lt;!&ndash; Bootstrap CSS &ndash;&gt;-->
+<!--    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">-->
+
+<!--    <link rel="stylesheet" type="text/html" href="{% static 'covidyoddha/main.css' %} ">-->
+
+<!--    {% if title %}-->
+<!--        <title>Django Covid Yoddha - {{ title }}</title>-->
+<!--    {% else %}-->
+<!--        <title>Django Covid Yoddha</title>-->
+<!--    {% endif %}-->
+<!--</head>-->
+<!--<body>-->
+<!--    <header class="site-header">-->
+<!--      <nav class="navbar navbar-expand-lg navbar-light bg-light">-->
+<!--        <div class="container">-->
+<!--          <a class="navbar-brand mr-4" href="{% url 'covidyoddha-home' %}">Covid Yoddha</a>-->
+<!--          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">-->
+<!--          <span class="navbar-toggler-icon"></span>-->
+<!--          </button>-->
+<!--          <div class="collapse navbar-collapse" id="navbarToggle">-->
+<!--            <div class="navbar-nav mr-auto">-->
+<!--              <a class="nav-item nav-link" href="{% url 'covidyoddha-home' %}">Home</a>-->
+<!--              <a class="nav-item nav-link" href="{% url 'covidyoddha-about' %}">About</a>-->
+<!--            </div>-->
+<!--            &lt;!&ndash; Navbar Right Side &ndash;&gt;-->
+<!--            <div class="navbar-nav">-->
+<!--            {% if user.is_staff %}-->
+<!--              <a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>-->
+<!--            {% else %}-->
+<!--                <a class="nav-item nav-link" href="{% url 'staff' %}">Login</a>-->
+<!--                <a class="nav-item nav-link" href="{% url 'patient_register' %}">Register</a>-->
+<!--            {% endif %}-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </nav>-->
+<!--    </header>-->
+<!--    <main role="main" class="container-fluid">-->
+<!--      <div class="row">-->
+<!--        <div class="col">-->
+<!--          {% if messages %}-->
+<!--                {% for message in messages %}-->
+<!--                <div class="container-fluid p-0">-->
+<!--                  <div class="alert {{ message.tags }} alert-dismissible" role="alert" >-->
+<!--                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">-->
+<!--                      <span aria-hidden="true">&times;</span>-->
+<!--                    </button>-->
+<!--                    {{ message }}-->
+<!--                  </div>-->
+<!--                </div>-->
+<!--                {% endfor %}-->
+<!--              {% endif %}-->
+
+<!--        </div>-->
+<!--&lt;!&ndash;        <div class="col-md-4 pt-5">&ndash;&gt;-->
+<!--&lt;!&ndash;          <div class="content-section">&ndash;&gt;-->
+<!--&lt;!&ndash;            <h3>Our Sidebar</h3>&ndash;&gt;-->
+<!--&lt;!&ndash;            <p class='text-muted'>You can put any information here you'd like.&ndash;&gt;-->
+<!--&lt;!&ndash;              <ul class="list-group">&ndash;&gt;-->
+<!--&lt;!&ndash;                <li class="list-group-item list-group-item-light">Latest Posts</li>&ndash;&gt;-->
+<!--&lt;!&ndash;                <li class="list-group-item list-group-item-light">Announcements</li>&ndash;&gt;-->
+<!--&lt;!&ndash;                <li class="list-group-item list-group-item-light">Calendars</li>&ndash;&gt;-->
+<!--&lt;!&ndash;                <li class="list-group-item list-group-item-light">etc</li>&ndash;&gt;-->
+<!--&lt;!&ndash;              </ul>&ndash;&gt;-->
+<!--&lt;!&ndash;            </p>&ndash;&gt;-->
+<!--&lt;!&ndash;          </div>&ndash;&gt;-->
+<!--&lt;!&ndash;        </div>&ndash;&gt;-->
+<!--      </div>-->
+<!--    </main>-->
+
+<!--    &lt;!&ndash; Optional JavaScript &ndash;&gt;-->
+<!--    &lt;!&ndash; jQuery first, then Popper.js, then Bootstrap JS &ndash;&gt;-->
+<!--    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>-->
+<!--    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>-->
+<!--    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>-->
+<!--  </body>-->
+<!--</html>-->
+
+
 {% load static %}
-<!doctype html>
-<html lang="en">
-  <head>
+<!DOCTYPE html>
+<html>
+<head>
+
     <!-- Required meta tags -->
     <meta charset="utf-8">
-    <base href="/">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2-bootstrap-theme/0.1.0-beta.10/select2-bootstrap.min.css" integrity="sha512-kq3FES+RuuGoBW3a9R2ELYKRywUEQv0wvPTItv3DSGqjpbNtGWVdvT8qwdKkqvPzT93jp8tSF4+oN4IeTEIlQA==" crossorigin="anonymous" />
 
     <link rel="stylesheet" type="text/html" href="{% static 'covidyoddha/main.css' %} ">
 
@@ -15,66 +106,267 @@
     {% else %}
         <title>Django Covid Yoddha</title>
     {% endif %}
+
+    <style>
+        .container-fluid {
+            padding-right: 15px !important;
+            padding-left: 0px;
+        }
+
+        #sidebar {
+            min-width: 45px;
+            max-width: 45px;
+            -webkit-transition: all 0.3s;
+            -o-transition: all 0.3s;
+            transition: all 0.3s;
+            text-align: center;
+            padding-top: 15px;
+            height: 100vh;
+            position: fixed;
+            z-index: 1;
+        }
+
+        #sidebar:hover {
+            min-width: 90px;
+            max-width: 90px;
+        }
+
+        #sidebar.active ul.components li {
+            font-size: 14px;
+        }
+
+        #sidebar.active ul.components li a {
+            padding: 10px 0;
+        }
+
+        #sidebar.active ul.components li a span {
+            display: none;
+        }
+
+        #sidebar.active ul.components li:hover a span {
+            font-weight: bolder;
+            color: black;
+            display: block;
+            transition: .5s;
+            font-size: smaller;
+        }
+
+        .active {}
+
+        #sidebar ul.components {
+            padding: 0;
+            -webkit-transition: 0.3s;
+            -o-transition: 0.3s;
+            transition: 0.3s;
+            height: 100%;
+        }
+
+        #sidebar ul li {
+            font-size: 16px;
+        }
+
+        #sidebar ul li>ul {
+            margin-left: 10px;
+        }
+
+        #sidebar ul li>ul li {
+            font-size: 14px;
+        }
+
+        #sidebar ul li a {
+            padding: 10px 30px;
+            display: block;
+            color: white;
+            text-decoration: none;
+        }
+
+
+        #sidebar ul li a:hover {
+            color: black;
+            background-color: white;
+        }
+
+        #sidebar ul li a img {
+            width: 30px;
+            filter: invert(1);
+        }
+
+        #sidebar ul li:hover a img {
+            filter: invert(0);
+        }
+
+
+        @media (max-width: 991.98px) {
+            #sidebar ul li a span {
+                display: block;
+            }
+        }
+
+
+        #sidebar ul li.active>a {
+            background: transparent;
+            color: #fff;
+        }
+
+        @media (max-width: 991.98px) {
+            #sidebar {
+                min-width: 55px;
+                max-width: 55px;
+                text-align: center;
+                margin-left: -80px !important;
+            }
+
+            #sidebar.active {
+                margin-left: 0 !important;
+            }
+        }
+
+        @media (max-width: 991.98px) {
+            #sidebarCollapse span {
+                display: none;
+            }
+        }
+
+        .navbar-brand{
+            color: yellow !important;
+        }
+        .nav-item {
+            color: yellow !important;
+        }
+
+        .nav-item a{
+            color: yellow !important;
+        }
+
+    </style>
 </head>
 <body>
-    <header class="site-header">
-      <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container">
-          <a class="navbar-brand mr-4" href="{% url 'covidyoddha-home' %}">Covid Yoddha</a>
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarToggle">
-            <div class="navbar-nav mr-auto">
-              <a class="nav-item nav-link" href="{% url 'covidyoddha-home' %}">Home</a>
-              <a class="nav-item nav-link" href="{% url 'covidyoddha-about' %}">About</a>
-            </div>
-            <!-- Navbar Right Side -->
-            <div class="navbar-nav">
-              <a class="nav-item nav-link" href="#">Login</a>
-              <a class="nav-item nav-link" href="#">Register</a>
-            </div>
-          </div>
-        </div>
-      </nav>
-    </header>
-    <main role="main" class="container">
-      <div class="row">
-        <div class="col-md-8">
-          {% if messages %}
-                {% for message in messages %}
-                <div class="container-fluid p-0">
-                  <div class="alert {{ message.tags }} alert-dismissible" role="alert" >
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                      <span aria-hidden="true">&times;</span>
-                    </button>
-                    {{ message }}
-                  </div>
-                </div>
-                {% endfor %}
-              {% endif %}
-          {% block content %}{% endblock %}
-        </div>
-        <div class="col-md-4 pt-5">
-          <div class="content-section">
-            <h3>Our Sidebar</h3>
-            <p class='text-muted'>You can put any information here you'd like.
-              <ul class="list-group">
-                <li class="list-group-item list-group-item-light">Latest Posts</li>
-                <li class="list-group-item list-group-item-light">Announcements</li>
-                <li class="list-group-item list-group-item-light">Calendars</li>
-                <li class="list-group-item list-group-item-light">etc</li>
-              </ul>
-            </p>
-          </div>
-        </div>
-      </div>
-    </main>
 
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-  </body>
+<header class="site-header">
+    <nav class="navbar navbar-expand-md navbar-light  fixed-top" style="background-color:#aaa;">
+        <a class="navbar-brand text-bold" href="{% url 'covidyoddha-home' %}"> <img class="rounded-circle article-img" width="55"  src="/static/covid_yoddha.jpg">  COVID-19</a>
+        <div class="container">
+            <a class="navbar-brand mr-4" href="{% url 'covidyoddha-home' %}">Pune</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarToggle">
+                <div class="navbar-nav ml-auto mr-auto">
+                    <a class="navbar-brand mr-4" href="#">Welcome to COVID-19</a>
+                </div>
+                <!-- Navbar Right Side -->
+                <div class="navbar-nav">
+                    {% if user.is_authenticated %}
+                        <a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>
+                    {% else %}
+                        <a class="nav-item nav-link" href="{% url 'covidyoddha-home' %}">Home</a>
+                        <a class="nav-item nav-link" href="{% url 'covidyoddha-about' %}">About</a>
+                        <a class="nav-item nav-link" href="{% url 'staff' %}">Login</a>
+                        <a class="nav-item nav-link" href="{% url 'patient_register' %}">Register</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </nav>
+</header>
+
+<main role="main" class="container-fluid mt-5" id="main-box">
+    {% if user.is_authenticated %}
+    <nav id="sidebar" class="active bg-dark float-left">
+        <!-- <h1><a href="#" class="logo"><img src="http://localhost/img/slogo.png" alt="" width="30px"></a></h1> -->
+        <ul class="list-unstyled components mb-5" id="sidebarul">
+            <li data-toggle="tooltip" data-placement="top" title="Tooltip on right">
+                <a href="#">
+                    <img src="/static/images/add-report.jpg">
+                    <span class="title">Report</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="{% url 'createPatient' %}">
+                    <img src="/static/images/add_patient.png">
+                    <span class="title">Add Patient</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="{% url 'createReport' %}">
+                    <img src="/static/images/report_patient.png">
+                    <span class="title">Add Report</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="#">
+                    <img src="/static/images/prescription_patient.png">
+                    <span class="title">Prescription</span>
+                </a>
+            </li>
+
+        </ul>
+
+        <button type="button" id="sidebarCollapse" class="btn btn-block btn-dark">
+            <i class="fa fa-bars text-light"></i>
+            <span class="sr-only">Toggle Menu</span>
+        </button>
+
+    </nav>
+    {% endif %}
+
+    <div class="row ml-5">
+        <div id="main_div">
+<!--            <div class="col-md-8">-->
+<!--            {% if messages %}-->
+<!--                {% for message in messages %}-->
+<!--                <div class="container-fluid p-0">-->
+<!--                  <div class="alert {{ message.tags }} alert-dismissible" role="alert" >-->
+<!--                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">-->
+<!--                      <span aria-hidden="true">&times;</span>-->
+<!--                    </button>-->
+<!--                    {{ message }}-->
+<!--                  </div>-->
+<!--                </div>-->
+<!--                {% endfor %}-->
+<!--              {% endif %}-->
+<!--            </div>-->
+            {% block content %}{% endblock %}
+        </div>
+
+    </div>
+</main>
+<nav class="navbar navbar-expand navbar-light  fixed-bottom py-0" style="background-color:#aaa;">
+    <div class=" navbar-collapse" id="navbarTogglerDemo01">
+        <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+            <li class="nav-item">
+                <a style="font-size : 14px;" class="nav-link" href="{% url 'covidyoddha-home' %}">Terms</a>
+            </li>
+
+            <li class="nav-item">
+                <a style="font-size : 14px;" class="nav-link" href="{% url 'covidyoddha-home' %}">Support</a>
+            </li>
+
+            <li class="nav-item">
+                <a style="font-size : 14px;" class="nav-link" href="{% url 'covidyoddha-home' %}">Help</a>
+            </li>
+
+            <li class="nav-item">
+                <a style="font-size : 14px;" class="nav-link" href="{% url 'covidyoddha-home' %}">Privacy</a>
+            </li>
+        </ul>
+        <span  style="font-size : 12px; color:#FFFF00"> Copyright © 2020-<script>document.write(new Date().getFullYear());</script>, COVID-19, ALL RIGHTS RESERVED</span>
+    </div>
+</nav>
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<script src="https://kit.fontawesome.com/a076d05399.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+
+<script>
+    $('#sidebarul').css('height',window.outerHeight)
+</script>
+
+</body>
 </html>
