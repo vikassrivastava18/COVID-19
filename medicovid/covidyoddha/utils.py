@@ -3,7 +3,7 @@ from io import BytesIO, StringIO
 from django.core.files import File
 from django.http import HttpResponse
 from django.template.loader import get_template
-from PyPDF2 import PdfFileWriter, PdfFileReader
+
 from xhtml2pdf import pisa
 
 def render_to_pdf(template_src, context_dict={}):

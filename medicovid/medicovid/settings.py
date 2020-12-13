@@ -43,7 +43,8 @@ SHARED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.admin',
-    'django.contrib.staticfiles'
+    'django.contrib.staticfiles',
+    'crispy_forms',
 )
 
 TENANT_APPS = (
@@ -55,6 +56,7 @@ TENANT_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'crispy_forms',
     # your tenant-specific apps
     'medicovid',
     'covidyoddha'
@@ -109,11 +111,9 @@ WSGI_APPLICATION = 'medicovid.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django_tenants.postgresql_backend',
-        'NAME': 'medicovid',
+        'NAME': 'postgres',
         'USER': 'postgres',
-        'PASSWORD': 'helloworld@2020',
-        'HOST': 'localhost',
-        'PORT': '5432',
+        'PASSWORD': '1234',
     }
 }
 
@@ -163,7 +163,9 @@ STATICFILES_DIRS = [
 
 STATIC_URL = '/static/'
 
-LOGIN_REDIRECT_URL = '/staff/'
+#LOGIN_REDIRECT_URL = '/staff/'
+LOGIN_REDIRECT_URL = '/account/'
+LOGIN_URL = '/account/'
 
 TENANT_MODEL = "customer.Client" # app.Model
 TENANT_DOMAIN_MODEL = "customer.Domain" # app.Model
@@ -173,7 +175,6 @@ DATABASE_ROUTERS = (
 )
 
 SITE_ID = 1
-
 
 from django.contrib.messages import constants as messages
 

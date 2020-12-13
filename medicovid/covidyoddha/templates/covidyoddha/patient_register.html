@@ -1,0 +1,168 @@
+{% extends "covidyoddha/base.html" %}
+{% load static %}
+{% block content %}
+
+<style>
+    .container-fluid {
+        padding-right: 15px !important;
+        padding-left: 175px !important;
+    }
+
+    .separator {
+        display: flex;
+        align-items: center;
+        text-align: center;
+    }
+
+    .separator::before,
+    .separator::after {
+        content: '';
+        flex: 1;
+        border-bottom: 1px solid rgb(128, 128, 128);
+    }
+
+    .separator::before {
+        margin-right: .25em;
+    }
+
+    .separator::after {
+        margin-left: .25em;
+    }
+
+</style>
+<div class="container-fluid">
+    <div class="justify-content-center text-center mt-5">
+        {% if messages %}
+            {% for message in messages %}
+              <div class="alert {{ message.tags }} alert-dismissible" role="alert" >
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+                {{ message }}
+              </div>
+            {% endfor %}
+        {% endif %}
+        {% if form.non_field_errors %}
+            <p class='form-errors'>
+                {% for error in form.non_field_errors %}
+                    <div class="alert alert-danger alert-dismissible" role="alert">
+                      <button type="button" class="close" data-dismiss="alert">&times;</button>
+                      <strong>{{ error }}</strong>
+                    </div>
+                {% endfor %}
+            </p>
+        {% endif %}
+        <h3 class="mb-3">REGISTER WITH US</h3>
+        <form method="POST" action="" >
+            {% csrf_token %}
+            <div class="row">
+                <div class="col">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                    <span class="fa fa-user"></span>
+                                </span>
+                            </div>
+                            <input type="text" class="form-control" placeholder="Enter First Name" id="firstname" name="firstname" required>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                    <span class="fa fa-user">
+                                    </span>
+                                </span>
+                            </div>
+                            <input type="text" class="form-control" placeholder="Enter Last Name" id="lastname" name="lastname" required>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                    <span class="fa fa-envelope">
+                                    </span>
+                                </span>
+                            </div>
+                            <input type="email" class="form-control" placeholder="Enter Email ID(Optional)" id="emailid" name="emailid">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                    <span class="fa fa-mobile">
+                                    </span>
+                                </span>
+                            </div>
+                            <input type="tel" pattern="^\d{10}$" class="form-control" placeholder="Enter Contact Number" id="contact" name="contact" required>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                    <span class="fa fa-child"></span>
+                                </span>
+                            </div>
+                            <input type="number" class="form-control" placeholder="Enter Age" id="age" name="age" required>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                    <span class="fa fa-transgender"></span>
+                                </span>
+                            </div>
+                            <select class="form-control" id="gender" name="gender">
+                                <option value="M">Male</option>
+                                <option value="F">Female</option>
+                                <option value="O">Other</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button id="modalForm" class="btn btn-primary btn-block" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Register</button>
+        </form>
+        <div class="">
+            <h6 class="separator text-muted text-sm my-4">Please Verify Your Mobile Number Using OTP</h6>
+            <form method="POST" action="{% url 'verify_patient_mobile' %}" autocomplete="off">
+              {% csrf_token %}
+                <div class="form-group">
+                    <div class="input-group ">
+                        <div class="input-group-prepend ">
+                            <span class="input-group-text">
+                                <span class="fa fa-key"></span>
+                            </span>
+                        </div>
+                        <input type="number" pattern="\d*" maxlength="4" minlength="4" class="form-control" name ="inputOTP" placeholder="Enter OTP here For Example: 1234" required>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Verify OTP</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

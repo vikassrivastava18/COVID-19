@@ -1,52 +1,173 @@
-{% extends 'base.html' %}
-{% block style %}
-{% load static %}
-{% endblock %}
-
+{% extends 'covidyoddha/base.html' %}
 {% block content %}
-{% if form.errors %}
-<p>Your username and password didn't match. Please try again.</p>
-{% endif %}
 
-{% if next %}
-{% if user.is_authenticated %}
-<p>Your account doesn't have access to the page. To proceed,
-  please login with an account that has access.</p>
-{% else %}
-{% endif %}
-{% endif %}
+<style>
+    .mybody {
+    background: #fafafa;
+    color: #333333;
+    margin-top: 0rem;
 
-<div class="container">
-  <div class="row" style="margin-top:18vh;">
-    <div class="col-lg-4 col-md-6 mx-auto">
-      <div class="card card-login">
+    }
+    .container-fluid {
+        padding-right: 15px !important;
+        padding-left: 15px !important;
+    }
 
-        <form class="form" method="post" action="{% url 'login' %}">
-          <div class="card-header card-header-primary text-center">
-            <h4 class="card-title">Login</h4>
-          </div>
-          <div class="card-body">
-            {% csrf_token %}
-            <span class="bmd-form-group">
-              <div class="input-group">
-                {{ form.username }}
-              </div>
-            </span>
-            <span class="bmd-form-group">
-              <div class="input-group">
-                {{ form.password }}
-              </div>
-            </span>
-          </div>
-          <div class="text-center mt-3">
-            <input class="btn btn-outline-primary" type="submit" value="login" />
-            <input type="hidden" name="next" value="{{ next }}" />
-          </div>
-        </form>
-      </div>
+    .separator {
+        display: flex;
+        align-items: center;
+        text-align: center;
+    }
 
+    .separator::before,
+    .separator::after {
+        content: '';
+        flex: 1;
+        border-bottom: 1px solid rgb(128, 128, 128);
+    }
+
+    .separator::before {
+        margin-right: .25em;
+    }
+
+    .separator::after {
+        margin-left: .25em;
+    }
+</style>
+
+<body class="mybody">
+    <div class="container-fluid p-0">
+        <div class="row">
+            <div class="col-lg-6 ">
+                <div class="row ">
+                    <div class="col-lg-12  p-0">
+                        <img src="https://i.imgur.com/82HOvVq.jpg" class="img-fluid mt-5" id="wall" width="" height="">
+                    </div>
+                    <div class="col-lg-12 p-0" style="background-color: #ECECEC;">
+                        <ul>
+                            <li class="text-dark my-2">
+                                Some sort of help from our side to the medical domain people.
+                            </li>
+                            <li>
+                                Some sort of help from our side to the medical domain people.
+                            </li>
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6 p-5 justify-content-center">
+                <div class="row ">
+                    <div class="justify-content-center text-center col-lg-8 col-sm-12 mt-lg-5 ml-lg-5 pl-5">
+                        {% if messages %}
+                            {% for message in messages %}
+                            <div class="container-fluid p-0">
+                              <div class="alert {{ message.tags }} alert-dismissible" role="alert" >
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                  <span aria-hidden="true">&times;</span>
+                                </button>
+                                {{ message }}
+                              </div>
+                            </div>
+                            {% endfor %}
+                        {% endif %}
+                        {% if form.non_field_errors %}
+                            <p class='form-errors'>
+                                {% for error in form.non_field_errors %}
+                                    <div class="alert alert-danger alert-dismissible" role="alert">
+                                      <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                      <strong>{{ error }}</strong>
+                                    </div>
+                                {% endfor %}
+                            </p>
+                        {% endif %}
+                        <h3 class="mb-4 mt-2">Welcome to COVID-19</h3>
+                        <form method="POST" action="" autocomplete="off">
+                          {% csrf_token %}
+                            <div class="form-group">
+                                <div class="input-group ">
+                                    <div class="input-group-prepend ">
+                                        <span class="input-group-text">
+                                            <span class="fa fa-user"></span>
+                                        </span>
+                                    </div>
+                                    {{ form.username }}
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text ">
+                                            <span class="fa fa-lock">
+                                            </span>
+                                        </span>
+                                    </div>
+                                    {{ form.password }}
+                                </div>
+                            </div>
+
+                            <div class="row my-3">
+                                <div class="col">
+                                    <div class="form-check">
+                                        <input type="checkbox" value="lsRememberMe" class="form-check-input" id="rememberMe">
+                                        <label class="form-check-label" for="rememberMe">Remember me</label>
+                                    </div>
+
+                                </div>
+                                <div class="col">
+                                    <div class="form-check float-right">
+                                        <a href="#">Forgot password?</a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary btn-block" onclick="lsRememberMe()">Login</button>
+                        </form>
+                    </div>
+
+                    <div class="col-lg-8 text-center pl-5 ml-lg-5 ">
+                        <h6 class="separator text-muted text-sm my-4">OR</h6>
+                        <a href="#" class="text-bold">Not a member? Register here</a>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
-</div>
+
+    <script>
+        let u = document.getElementById('id_username');
+        let p = document.getElementById('id_password');
+
+        u.classList.add('form-control')
+        u.placeholder = "Enter Username"
+
+        p.classList.add('form-control')
+        p.placeholder = "Enter Password"
+
+        const rmCheck = document.getElementById("rememberMe"),
+            usernameInput = document.getElementById("id_username");
+
+        if (localStorage.checkbox && localStorage.checkbox !== "") {
+          rmCheck.setAttribute("checked", "checked");
+          usernameInput.value = localStorage.username;
+        } else {
+          rmCheck.removeAttribute("checked");
+          usernameInput.value = "";
+        }
+
+        function lsRememberMe() {
+          if (rmCheck.checked && usernameInput.value !== "") {
+            localStorage.username = usernameInput.value;
+            localStorage.checkbox = rmCheck.value;
+          } else {
+            localStorage.username = "";
+            localStorage.checkbox = "";
+          }
+        }
+
+    </script>
+</body>
 
 {% endblock %}

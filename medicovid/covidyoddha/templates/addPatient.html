@@ -1,14 +1,13 @@
-{% extends 'base.html' %}
-{% block style %}
+{% extends 'covidyoddha/base.html' %}
 {% load static %}
-{% endblock %}
+
 
 {% block content %}
-<h3>Welcome staff - {{ request.user.username }}</h3>
+<h3 class="ml-5 mt-5">Welcome staff - {{ request.user.username }}</h3>
 <br><br>
 
-<h2>Add Patient's Information</h2>
-<form action="" method="post">
+<h2 class="ml-5">Add Patient's Information</h2>
+<form class="ml-5" action="" method="post">
     {% csrf_token %}
     <table>
     {{ form.as_table }}

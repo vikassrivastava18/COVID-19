@@ -1,0 +1,10 @@
+/.idea
+/customer/migrations
+/django_project/local_setting.py
+media/
+/users/migrations
+/workboard/migrations
+/db.sqlite3
+venv/
+__pycache__/git
+*.pyc
