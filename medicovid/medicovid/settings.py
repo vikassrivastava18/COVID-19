@@ -176,7 +176,6 @@ DATABASE_ROUTERS = (
 
 SITE_ID = 2
 
-
 from django.contrib.messages import constants as messages
 
 MESSAGE_TAGS = {

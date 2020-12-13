@@ -49,7 +49,7 @@ def home(request):
                 Hello Mr. { patient_first_name } { patient_last_name } Your Secure Device OTP is - {otp}
                 '''
 
-                sent_otp = send_otp('AC2ada64bbf0631ec1ec778efcb405c1b3', '818440649467b203ce7a7115584aca89', msg_body,'+14158775175','+91'+request_mobile)
+                sent_otp = send_otp('#', '#', msg_body,'#','+91'+request_mobile)
                 request.session["sent_otp"] = str(sent_otp)
 
                 messages.success(request, f'Your OTP Send Successfully !!!')
