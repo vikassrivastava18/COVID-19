@@ -1,5 +1,5 @@
 from django.core.files import File
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .models import Patient
 from .otp import send_otp , otp
 from django.contrib import messages
@@ -8,6 +8,13 @@ from django.http import HttpResponse
 from .utils import render_to_pdf
 from datetime import datetime
 from io import BytesIO
+# from .forms import mobileOTPForm
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views import View
+from .forms import PatientCreationForm, ReportCreationForm
+from django.views.generic.edit import CreateView
+from django.urls import reverse_lazy
+
 
 
 def home(request):
@@ -37,11 +44,11 @@ def home(request):
             '''
             print(msg_body)
             sent_otp = send_otp('AC454eb3b87b77a6113b0cbe038d71f699', '2e133945b41c8443a99dcc98dcb15def', msg_body,'+13158190802','+91'+request_mobile)
+
             request.session["sent_otp"] = str(sent_otp)
 
             messages.success(request, f'Your OTP Send Successfully !!!')
             print(sent_otp)
-
     return render(request, 'covidyoddha/home.html')
 
 
@@ -100,3 +107,26 @@ def GeneratePdf(request):
 
 def about(request):
     return render(request, 'covidyoddha/about.html', { 'title' : 'About'})
+
+
+class StaffView(LoginRequiredMixin, View):
+
+    def get(self, request):
+        form_dict = {
+            'patientForm': PatientCreationForm()
+        }
+        return render(request, 'staff.html', form_dict)
+
+
+class CreatePatientView(LoginRequiredMixin, CreateView):
+    form_class = PatientCreationForm
+    template_name = "addPatient.html"
+    success_url = reverse_lazy('staff')
+
+
+class CreateReportView(LoginRequiredMixin, CreateView):
+    form_class = ReportCreationForm
+    template_name = "addReport.html"
+    success_url = reverse_lazy('staff')
+
+

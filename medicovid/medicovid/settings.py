@@ -31,7 +31,7 @@ ALLOWED_HOSTS = ["*"]
 
 # Application definition
 
-SHARED_APPS = [
+SHARED_APPS = (
     'django_tenants',  # mandatory
     'customer', # you must list the app where your tenant model resides in
 
@@ -43,22 +43,23 @@ SHARED_APPS = [
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.admin',
+    'django.contrib.staticfiles'
+)
+
+TENANT_APPS = (
+    # The following Django contrib apps must be in TENANT_APPS
+    'django.contrib.contenttypes',
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.sessions',
+    'django.contrib.sites',
+    'django.contrib.messages',
     'django.contrib.staticfiles',
+    # your tenant-specific apps
+    'medicovid',
+    'covidyoddha'
+)
 
-
-]
-
-TENANT_APPS = ['django.contrib.auth',
-                'django.contrib.sites',
-                'django.contrib.sessions',
-                'django.contrib.contenttypes',
-                'django.contrib.messages',
-                'django.contrib.admin',
-                'django.contrib.staticfiles',
-                'covidyoddha',
-                'users',
-                'crispy_forms',
-               ]
 
 INSTALLED_APPS = list(set(SHARED_APPS + TENANT_APPS))
 
@@ -82,6 +83,7 @@ TEMPLATES = [
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
+                'django.template.context_processors.media',
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
@@ -107,7 +109,7 @@ WSGI_APPLICATION = 'medicovid.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django_tenants.postgresql_backend',
-        'NAME': 'postgres',
+        'NAME': 'medicovid',
         'USER': 'postgres',
         'PASSWORD': 'helloworld@2020',
         'HOST': 'localhost',
@@ -151,13 +153,17 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
-STATIC_URL = '/static/'
+
 STATIC_ROOT = '/static/'
 STATIC_DIR = os.path.join(BASE_DIR,'static')
 
 STATICFILES_DIRS = [
     STATIC_DIR,
 ]
+
+STATIC_URL = '/static/'
+
+LOGIN_REDIRECT_URL = '/staff/'
 
 TENANT_MODEL = "customer.Client" # app.Model
 TENANT_DOMAIN_MODEL = "customer.Domain" # app.Model
@@ -171,7 +177,6 @@ SITE_ID = 1
 
 from django.contrib.messages import constants as messages
 
-
 MESSAGE_TAGS = {
         messages.DEBUG: 'alert-secondary',
         messages.INFO: 'alert-info',
@@ -181,3 +186,7 @@ MESSAGE_TAGS = {
  }
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+import os
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
