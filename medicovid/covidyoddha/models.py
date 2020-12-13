@@ -9,9 +9,7 @@ GENDER = (
              ('O', 'Other'),
 )
 
-
 class Patient(models.Model):
-    patient_id = models.AutoField(primary_key=True)
     patient_first_name = models.CharField(max_length=100)
     patient_last_name = models.CharField(max_length=100)
     patient_mobile = models.CharField(max_length=13)
