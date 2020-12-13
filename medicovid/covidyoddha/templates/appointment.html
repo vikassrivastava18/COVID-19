@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block style %}
+{% load static %}
+{% endblock %}
+
+{% block content %}
+<h2>Make an appointment</h2>
+<form action="{% url 'pick_time' %}" method="get">
+    <label for="mobile">Enter Mobile Number</label>
+    <input type="text" name="mobile" id="mobile">
+    <label for="pick_date">Pick a date</label>
+    <input type="date" required id="pick_date" name="pick_date">
+    <input type="submit">
+</form>
+
+{% if date_picked %}
+    <h3>Select a time slot</h3>
+    <form action="{% url 'take_appointment' %}" method="post">{% csrf_token %}
+        <select name="pick_time" id="pick_time">
+            {% for slot in available_slots %}
+                <option value="{{ slot.hour }}-{{ slot.min }} {{ date }}">{{ slot.hour }} : {{ slot.min }}</option>
+            {% endfor %}
+        </select>
+        <input type="submit">
+    </form>
+{% endif %}
+{% endblock %}

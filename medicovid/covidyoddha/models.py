@@ -60,12 +60,12 @@ class Staff(models.Model):
 
 test_time_in_minute = 15   #15 Minutes
 hospital_opens_at = 10   # 10 am
-hospital_close_at = 6      # 6 pm
+hospital_close_at = 18      # 6 pm
 
 
 class Appointment(models.Model):
-    patient = models.OneToOneField(Patient, on_delete= models.SET_NULL, null=True)
+    patient = models.ForeignKey(Patient, on_delete= models.SET_NULL, null=True)
     time = models.DateTimeField()
 
-    def __str__(self):
-        return str(self.time)
+    # def __str__(self):
+    #     return self.time

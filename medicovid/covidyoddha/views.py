@@ -1,7 +1,7 @@
 from django.contrib.auth.views import LogoutView
 from django.core.files import File
-from django.shortcuts import render, redirect
-from .models import Patient
+from django.shortcuts import render, redirect, get_object_or_404
+from .models import Patient, test_time_in_minute, hospital_close_at, hospital_opens_at, Appointment
 from .otp import send_otp , otp
 from django.contrib import messages, auth
 from django.contrib.auth import settings
@@ -147,6 +147,59 @@ class CreateReportView(LoginRequiredMixin, CreateView):
     success_url = reverse_lazy('staff')
 
 
+class AppointmentSlot(LoginRequiredMixin, View):
+    def get(self, request):
+        return render(request, 'appointment.html')
+
+
+class PickTime(LoginRequiredMixin, View):
+    def get(self, request):
+        date = request.GET['pick_date']
+        mobile = request.GET['mobile']
+        patient = get_object_or_404(Patient, patient_mobile=mobile)
+        request.session['patient'] = patient.id
+        date_dt1 = datetime.strptime(date, '%Y-%m-%d')
+        booked_slots_query = Appointment.objects.filter(time__date=datetime.date(date_dt1))
+        booked_slots = []
+        for slot in booked_slots_query:
+            print(slot.time)
+            hour = slot.time.hour
+            min = slot.time.minute
+            booked_slots.append({'hour':hour, 'min':min})
+        available_slots = []
+        total_slots_count = ((hospital_close_at - hospital_opens_at) * (60 / test_time_in_minute))
+        print('total_slots_count', total_slots_count)
+        for i in range(int(total_slots_count)):
+            slot_hour = hospital_opens_at + i // 4
+            slot_min = 15 * (i % 4)
+            slot = {'hour':slot_hour, 'min':slot_min}
+            if slot not in booked_slots:
+                available_slots.append(slot)
+        context = {
+            'available_slots': available_slots,
+            'date_picked': True,
+            'date': date
+        }
+        return render(request, 'appointment.html', context)
+
+
+class TakeAppointment(LoginRequiredMixin, View):
+    def post(self, request):
+        date_time = request.POST['pick_time']
+        datetime_list = date_time.split(' ')
+        date = datetime_list[1]
+        y_m_d = date.split('-')
+        year = int(y_m_d[0])
+        month = int(y_m_d[1])
+        day = int(y_m_d[2])
+        hour = int(datetime_list[0].split('-')[0])
+        min = int(datetime_list[0].split('-')[1])
+        datetime_appointment = datetime(year, month, day, hour, min)
+        patient = Patient.objects.get(id=request.session['patient'])
+        fix_appointment = Appointment.objects.create(patient=patient, time=datetime_appointment)
+        return redirect('staff')
+
+
 def login_admin(request):
     if request.method == "POST":
         u = request.POST["username"]
@@ -262,6 +315,4 @@ def Logout(request):
     logout(request)
     messages.success(request, 'You have been logged out')
     return redirect('login')
-
-
 
