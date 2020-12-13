@@ -1,0 +1,5 @@
+Add host to linux:
+sudo nano /etc/hosts
+
+
+

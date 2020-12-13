@@ -43,7 +43,8 @@ SHARED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.admin',
-    'django.contrib.staticfiles'
+    'django.contrib.staticfiles',
+    'crispy_forms',
 )
 
 TENANT_APPS = (
@@ -55,6 +56,7 @@ TENANT_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'crispy_forms',
     # your tenant-specific apps
     'medicovid',
     'covidyoddha'
@@ -163,7 +165,9 @@ STATICFILES_DIRS = [
 
 STATIC_URL = '/static/'
 
-LOGIN_REDIRECT_URL = '/staff/'
+#LOGIN_REDIRECT_URL = '/staff/'
+LOGIN_REDIRECT_URL = '/account/'
+LOGIN_URL = '/account/'
 
 TENANT_MODEL = "customer.Client" # app.Model
 TENANT_DOMAIN_MODEL = "customer.Domain" # app.Model
@@ -173,9 +177,9 @@ DATABASE_ROUTERS = (
 )
 
 SITE_ID = 1
-
-account_sid = 'AC2ada64bbf0631ec1ec778efcb405c1b3'
-auth_token = '804b432d43528cbacda1af5ec166b7f5'
+#
+# account_sid = '#'
+# auth_token = '#'
 
 from django.contrib.messages import constants as messages
 

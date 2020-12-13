@@ -9,10 +9,10 @@ GENDER = (
              ('O', 'Other'),
 )
 
-
 class Patient(models.Model):
-    patient_name = models.CharField(max_length=100)
-    patient_mobile = models.CharField(max_length=13)  # Make pk??
+    patient_first_name = models.CharField(max_length=100)
+    patient_last_name = models.CharField(max_length=100)
+    patient_mobile = models.CharField(max_length=13)
     patient_email = models.EmailField(null=True)
     patient_age = models.IntegerField()
     patient_gender = models.CharField(
@@ -20,10 +20,9 @@ class Patient(models.Model):
         choices= GENDER,
         help_text='Please select your Gender'
     )
-    # patient_otp = models.PositiveIntegerField()
 
     def __str__(self):
-        return self.patient_name
+        return self.patient_first_name
 
 
 RESULT = (
@@ -35,7 +34,8 @@ RESULT = (
 
 class Report(models.Model):
     report_id = models.UUIDField(primary_key=True, default=uuid.uuid1,
-                          help_text='Unique ID for this particular report')
+                                 help_text='Unique ID for this particular report')
+
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
     result = models.CharField(
         max_length=1,
