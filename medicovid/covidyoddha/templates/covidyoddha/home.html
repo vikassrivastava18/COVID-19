@@ -1,28 +1,118 @@
-{% extends "covidyoddha/base.html" %}
+{% extends 'covidyoddha/base.html' %}
+{% load crispy_forms_tags %}
 {% block content %}
-    <form class="form-inline" style="margin-top:100px" action="{% url 'covidyoddha-home' %}" method="POST">
-        {% csrf_token %}
-      <div class="form-group mb-2">
-        <label for="staticEmail2" class="sr-only">Send OTP</label>
-        <input type="text" readonly class="form-control-plaintext" id="staticEmail2" value="Enter Your Mobile : +91">
-      </div>
-      <div class="form-group mx-sm-2 mb-2">
-        <label for="inputMobile" class="sr-only">Mobile Number</label>
-        <input type="tel" pattern="^\d{10}$" class="form-control" name = "inputMobile" id="inputMobile" placeholder="9763529046" required>
-      </div>
-      <button type="submit" class="btn btn-primary mb-2">Send OTP</button>
-    </form>
-    <br />
-    <form class="form-inline" action="{% url 'covidyoddha-report' %}" method="POST">
-        {% csrf_token %}
-      <div class="form-group mb-2">
-        <label for="staticEmail2" class="sr-only">OTP</label>
-        <input type="text" readonly class="form-control-plaintext" id="otp" value="Please Enter Your OTP :">
-      </div>
-      <div class="form-group mx-sm-2 mb-2">
-        <label for="inputOTP" class="sr-only">OTP</label>
-        <input type="number" pattern="\d*" maxlength="4" minlength="4" class="form-control" name ="inputOTP" id="inputOTP" placeholder="1234" required>
-      </div>
-      <button type="submit" class="btn btn-primary mb-2">Verify OTP</button>
-    </form>
-{% endblock content %}
+{% load static %}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-6 ">
+            <div class="row ">
+                <div class="col-lg-12  p-0">
+                    <img src="/static/images/covid_yoddha_home.jpg" class="img-fluid mt-3" id="wall" width="610px" height="">
+                </div>
+                <div class="col-lg-11" style="background-color: #ECECEC;">
+                    <ul>
+                        <li class="text-dark my-2">
+                            Some sort of help from our side to the medical domain people.
+                        </li>
+                        <li>
+                            Some sort of help from our side to the medical domain people.
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-6 justify-content-center">
+            <div class="row ">
+                <div class="justify-content-center text-center col-lg-8 col-sm-12  ml-lg-5 pl-5">
+                    {% if messages %}
+                        {% for message in messages %}
+                        <div class="container-fluid p-0">
+                          <div class="alert {{ message.tags }} alert-dismissible" role="alert" >
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                            {{ message }}
+                          </div>
+                        </div>
+                        {% endfor %}
+                    {% endif %}
+                    {% if form.non_field_errors %}
+                        <p class='form-errors'>
+                            {% for error in form.non_field_errors %}
+                                <div class="alert alert-danger alert-dismissible" role="alert">
+                                  <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                  <strong>{{ error }}</strong>
+                                </div>
+                            {% endfor %}
+                        </p>
+                    {% endif %}
+                    <h3 class="mt-5 mb-3">Please fill information</h3>
+                    <form method="POST" action="{% url 'covidyoddha-home' %}" autocomplete="off">
+                      {% csrf_token %}
+                        <div class="form-group">
+                            <div class="input-group ">
+                                <div class="input-group-prepend ">
+                                    <span class="input-group-text">
+                                        <span class="fa fa-user"></span>
+                                    </span>
+                                </div>
+
+                                   <input type="text" class="form-control" name="firstname" placeholder="Enter First Name" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text ">
+                                        <span class="fa fa-user">
+                                        </span>
+                                    </span>
+                                </div>
+                                <input type="text" class="form-control" name="lastname" placeholder="Enter Last Name" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text ">
+                                        <span class="fa fa-mobile">
+                                        </span>
+                                    </span>
+                                </div>
+                                <input type="tel" pattern="^\d{10}$" class="form-control" name = "inputMobile" placeholder="9763529046" required>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary btn-block">Submit & Send OTP</button>
+                    </form>
+                </div>
+
+                <div class="col-lg-8 text-center pl-5 ml-lg-5 ">
+                    <h6 class="separator text-muted text-sm my-4">Please Verify Your Mobile Number Using OTP</h6>
+                    <form method="POST" action="{% url 'covidyoddha-report' %}" autocomplete="off">
+                      {% csrf_token %}
+                        <div class="form-group">
+                            <div class="input-group ">
+                                <div class="input-group-prepend ">
+                                    <span class="input-group-text">
+                                        <span class="fa fa-key"></span>
+                                    </span>
+                                </div>
+                                <input type="number" pattern="\d*" maxlength="4" minlength="4" class="form-control" name ="inputOTP" placeholder="Enter OTP here For Example: 1234" required>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block">Verify OTP</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+

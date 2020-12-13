@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
     <head>
-        <title>{{ patient_name }} Covid-19 Report</title>
+        <title>{{ patient_first_name }} Covid-19 Report</title>
         <style type="text/css">
             body {
                 font-weight: 200;
@@ -41,13 +41,14 @@
 
         <div class='wrapper'>
             <div class='header'>
-                <p class='title'><h2>COVID-19</h2></p>{{ today }}
+                <p class='title'><h2>COVID-19 Report</h2></p>
+                <p>{{ patient_first_name }} {{ patient_last_name }}</p>{{ today }}
             </div>
         <div>
         <hr class='hrItem' /><br>
         <div class='details'>
 
-                Name : {{ patient_name }} <br/><br/>
+                Name : {{ patient_first_name }} {{ patient_last_name }}<br/><br/>
                 Email : {{ patient_email }}  <br/><br/>
                 Age : {{ patient_age }} <br/><br/>
                 Gender : {{ patient_gender }} <br/><br/>
