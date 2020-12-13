@@ -203,8 +203,8 @@ def patient_register(request):
                         Thank you For Using Covid-Yoddha Website !
                         Hello {firstname} {lastname} Your Secure Device OTP is - {otp}
                         '''
-            sent_otp = send_otp('AC2ada64bbf0631ec1ec778efcb405c1b3', '818440649467b203ce7a7115584aca89', msg_body,
-                                '+14158775175', '+91' + contact)
+            sent_otp = send_otp('#', '#', msg_body,
+                                '#', '+91' + contact)
             request.session["sent_otp"] = str(sent_otp)
             print(sent_otp)
 
