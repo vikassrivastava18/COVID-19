@@ -12,9 +12,9 @@ urlpatterns = [
     path('print_report/', views.GeneratePdf,name = 'print-report'),
     path('patient_register/', patient_register, name='patient_register'),
     path('verify_patient_mobile/', verify_patient_mobile, name='verify_patient_mobile'),
-]
-
-urlpatterns += [
+# ]
+#
+# urlpatterns += [
     #path('login/', LoginView.as_view(template_name="login.html",authentication_form=UserLoginForm), name='login'),
     path('account/', login_admin, name="login"),
     path('logout/', views.Logout, name='logout'),

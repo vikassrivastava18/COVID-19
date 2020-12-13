@@ -126,8 +126,11 @@ def about(request):
 class StaffView(LoginRequiredMixin, View):
 
     def get(self, request):
+        patient_list = Patient.objects.all()
+        print("patient_list",patient_list)
         form_dict = {
-            'patientForm': PatientCreationForm()
+            'patientForm': PatientCreationForm(),
+            'patient_list': patient_list,
         }
         return render(request, 'staff.html', form_dict)
 
@@ -216,27 +219,27 @@ def patient_register(request):
     return render(request, 'covidyoddha/patient_register.html')
 
 def verify_patient_mobile(request):
+    try:
+        firstname = request.session['patient_first_name']
+        lastname = request.session['patient_last_name']
+        emailid = request.session['patient_email']
+        contact = request.session['patient_mobile']
+        age = request.session['patient_age']
+        gender = request.session['patient_gender']
 
-    firstname = request.session['patient_first_name']
-    lastname = request.session['patient_last_name']
-    emailid = request.session['patient_email']
-    contact = request.session['patient_mobile']
-    age = request.session['patient_age']
-    gender = request.session['patient_gender']
+        context = {
+            'patient_first_name': firstname,
+            'patient_last_name': lastname,
+            'patient_email': emailid,
+            'patient_mobile': contact,
+            'patient_age': age,
+            'patient_gender': gender
+        }
 
-    context = {
-        'patient_first_name': firstname,
-        'patient_last_name': lastname,
-        'patient_email': emailid,
-        'patient_mobile': contact,
-        'patient_age': age,
-        'patient_gender': gender
-    }
+        if request.method == 'POST':
+            patient_otp = request.POST.get('inputOTP')
 
-    if request.method == 'POST':
-        patient_otp = request.POST.get('inputOTP')
 
-        try:
             print(patient_otp, request.session['sent_otp'])
             if patient_otp == request.session['sent_otp']:
                 patient = Patient.objects.create(patient_first_name=firstname,
@@ -251,10 +254,10 @@ def verify_patient_mobile(request):
             else:
                 messages.error(request, "This is not a valid mobile number, Please Try Again.")
                 return render(request, 'covidyoddha/home.html',context)
-        except Exception as e:
-            print('error :->', e)
-            messages.error(request, "OPS! OTP is not correct, Please Try Again.")
-            return render(request, "covidyoddha/patient_register.html",context)
+    except Exception as e:
+        print('error :->', e)
+        messages.error(request, "OPS! OTP is not correct, Please Try Again.")
+        return render(request, "covidyoddha/patient_register.html")
 
     return render(request, "covidyoddha/patient_register.html",context)
 
