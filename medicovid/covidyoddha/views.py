@@ -50,7 +50,7 @@ def home(request):
                 Hello Mr. { patient_first_name } { patient_last_name } Your Secure Device OTP is - {otp}
                 '''
 
-                sent_otp = send_otp('AC454eb3b87b77a6113b0cbe038d71f699', '2e133945b41c8443a99dcc98dcb15def', msg_body,'+13158190802','+91'+request_mobile)
+                sent_otp = send_otp('#', '##', msg_body,'+#','+91'+request_mobile)
                 request.session["sent_otp"] = str(sent_otp)
 
                 messages.success(request, f'Your OTP Send Successfully !!!')
@@ -256,15 +256,15 @@ def patient_register(request):
                         Thank you For Using Covid-Yoddha Website !
                         Hello {firstname} {lastname} Your Secure Device OTP is - {otp}
                         '''
-            sent_otp = send_otp('AC454eb3b87b77a6113b0cbe038d71f699', '2e133945b41c8443a99dcc98dcb15def', msg_body,
-                                '+13158190802', '+91' + contact)
+            sent_otp = send_otp('#', '#', msg_body,
+                                '+#', '+91' + contact)
             request.session["sent_otp"] = str(sent_otp)
 
             messages.success(request, f'Your OTP Send Successfully !!!')
             return render(request, 'covidyoddha/patient_register.html',context)
 
         except Exception as e:
-            messages.error(request, "This is not a valid mobile number, Please Try Again.")
+            messages.error(request, e)
             return render(request, "covidyoddha/patient_register.html", context)
 
     return render(request, 'covidyoddha/patient_register.html')

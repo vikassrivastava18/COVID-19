@@ -9,6 +9,7 @@ GENDER = (
              ('O', 'Other'),
 )
 
+
 class Patient(models.Model):
     patient_first_name = models.CharField(max_length=100)
     patient_last_name = models.CharField(max_length=100)
@@ -67,5 +68,5 @@ class Appointment(models.Model):
     patient = models.ForeignKey(Patient, on_delete= models.SET_NULL, null=True)
     time = models.DateTimeField()
 
-    # def __str__(self):
-    #     return self.time
+#     # def __str__(self):
+#     #     return self.time

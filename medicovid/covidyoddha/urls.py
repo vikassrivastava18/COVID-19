@@ -14,7 +14,10 @@ urlpatterns = [
     path('patient_register/', patient_register, name='patient_register'),
     path('verify_patient_mobile/', verify_patient_mobile, name='verify_patient_mobile'),
     path('account/', login_admin, name="login"),
-    path('logout/', views.Logout, name='logout'),
+    path('logout/', views.Logout, name='logout')
+    ]
+
+urlpatterns += [
     path('staff/', StaffView.as_view(), name='staff'),
     path('create_patient/', CreatePatientView.as_view(), name='createPatient'),
     path('create_report/', CreateReportView.as_view(), name='createReport'),
