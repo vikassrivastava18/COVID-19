@@ -1,0 +1,65 @@
+{% extends "covidyoddha/base.html" %}
+{% load static %}
+{% block content %}
+<div class="mt-5 ml-5">
+{% if messages %}
+    {% for message in messages %}
+      <div class="alert {{ message.tags }} alert-dismissible" role="alert" >
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        {{ message }}
+      </div>
+    {% endfor %}
+{% endif %}
+</div>
+<h2 class="ml-5 mt-5">Update appointment</h2>
+<form class="ml-5 mt-3" method="post">
+    {% csrf_token %}
+    <div class="form-row">
+        <div class="col-md-6 mb-3">
+          <label>Full Name</label>
+          <input type="text" class="form-control" id="validationCustom01" value="{{ appointment.patient.patient_first_name }} {{ appointment.patient.patient_last_name }}" disabled>
+        </div>
+        <div class="col-md-6 mb-3">
+          <label>Mobile number</label>
+          <input type="text" class="form-control" value="{{ appointment.patient.patient_mobile }}" disabled>
+        </div>
+    </div>
+
+    <div class="form-row">
+        <div class="col-md-6 mb-3">
+          <label>Picked Date</label>
+          <input type="text" class="form-control" value="{{ appointment.time.date }}" disabled>
+        </div>
+        <div class="col-md-6 mb-3">
+          <label>Change Date</label>
+          <input value="{{ appointment.time.date.year }}-{{ appointment.time.date.month }}-{{ appointment.time.date.day }}" class="form-control" type="date" required id="pick_date" name="pick_date">
+        </div>
+    </div>
+
+    <div class="form-row">
+        <div class="col-md-6 mb-3">
+          <label for="validationCustom01">Picked Time</label>
+          <input type="text" class="form-control" value="{{ appointment.time.time }}" disabled>
+        </div>
+        <div class="col-md-6 mb-3">
+          <label>Change Time</label>
+          <select required class="form-control" name="pick_time" id="pick_time">
+            {% for slot in available_slots %}
+                {% if slot.hour < 12 %}
+
+                <option value="{{ slot.hour }}-{{ slot.min }} ">{{ slot.hour }} : {{ slot.min }} am</option>
+                {% else %}
+                <option value="{{ slot.hour }}-{{ slot.min }} ">{{ slot.hour }} : {{ slot.min }} pm</option>
+                {% endif %}
+            {% endfor %}
+
+          </select>
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary btn-block">Submit</button>
+</form>
+
+{% endblock %}

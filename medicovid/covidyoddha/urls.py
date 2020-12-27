@@ -2,7 +2,7 @@ from . import views
 from django.urls import path, include
 from django.contrib.auth.views import LoginView
 from .views import StaffView, CreatePatientView, CreateReportView, AppointmentSlot, PickTime, TakeAppointment
-from .views import StaffView, CreatePatientView, CreateReportView, LogoutView, login_admin, PatientDelete, PatientUpdate
+from .views import StaffView, CreatePatientView, CreateReportView, LogoutView, login_admin, PatientDelete, PatientUpdate, AppointmentView, AppointmentUpdate
 from .forms import UserLoginForm
 from .views import *
 
@@ -15,6 +15,8 @@ urlpatterns = [
     path('verify_patient_mobile/', verify_patient_mobile, name='verify_patient_mobile'),
     path('patientDelete/<pid>', PatientDelete, name = 'patientDelete'),
     path('patientUpdate/<pid>', PatientUpdate, name = 'patientUpdate'),
+    path('appointmentDelete/<aid>', AppointmentDelete, name = 'appointmentDelete'),
+    path('appointmentUpdate/<aid>', AppointmentUpdate, name = 'appointmentUpdate'),
 # ]
 #
 # urlpatterns += [
@@ -26,6 +28,7 @@ urlpatterns = [
     path('create_report/', CreateReportView.as_view(), name='createReport'),
     path('appointment/', AppointmentSlot.as_view(), name='appointment'),
     path('pick_time/', PickTime.as_view(), name='pick_time'),
-    path('take_appointment/', TakeAppointment.as_view(), name='take_appointment')
+    path('take_appointment/', TakeAppointment.as_view(), name='take_appointment'),
+    path('appointmentList/', AppointmentView.as_view(), name='appointmentList'),
 
 ]

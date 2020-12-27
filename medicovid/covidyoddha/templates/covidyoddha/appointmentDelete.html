@@ -1,0 +1,21 @@
+{% extends 'covidyoddha/base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="container-fluid">
+    <div class="justify-content-center">
+      <form method="POST" class="ml-5 mt-5">
+          {% csrf_token %}
+          <fieldset class="form-group">
+              <legend class="border-bottom mb-4"><h3>Delete Appointment</h3></legend>
+                <h5>Are you sure you want to delete {{ appointment.patient.patient_first_name }} Appointment ?</h5>
+          </fieldset>
+          <div class="form-group">
+              <button class="btn btn-outline-danger" type="submit">Delete</button>
+          </div>
+      </form>
+      <a href="{% url 'appointmentList' %}"><button class="btn btn-outline-secondary ml-5" >Cancel</button></a>
+      <br><br><br><br><br><br><br><br><br><br>
+    </div>
+</div>
+
+{% endblock content %}

@@ -1,6 +1,18 @@
 {% extends "covidyoddha/base.html" %}
 {% load static %}
 {% block content %}
+<div class="mt-5 ml-5">
+{% if messages %}
+    {% for message in messages %}
+      <div class="alert {{ message.tags }} alert-dismissible" role="alert" >
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        {{ message }}
+      </div>
+    {% endfor %}
+{% endif %}
+</div>
 <h2 class="ml-5 mt-5">Make an appointment</h2>
 <form class="ml-5" action="{% url 'pick_time' %}" method="get">
     <label for="mobile">Enter Mobile Number</label>

@@ -9,7 +9,7 @@ from django.contrib import messages, auth
 from django.contrib.auth import settings
 from django.http import HttpResponse
 from .utils import render_to_pdf
-from datetime import datetime
+from datetime import date, datetime
 from django.db.models import Q
 from io import BytesIO
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -300,7 +300,7 @@ def PatientDelete(request,pid):
     patient = get_object_or_404(Patient, id=pid)
     if request.method == 'POST':
         patient_first_name = patient.patient_first_name
-        if request.user.is_staff and request.user.is_superuser and request.user.is_active:
+        if request.user.is_staff and request.user.is_superuser:
             patient.delete()
             messages.success(request, f'Patient { patient_first_name } deleted Successfully. Thank You!!!')
             return redirect('staff')
@@ -341,51 +341,140 @@ class AppointmentSlot(LoginRequiredMixin, View):
 
 class PickTime(LoginRequiredMixin, View):
     def get(self, request):
-        date = request.GET['pick_date']
-        mobile = request.GET['mobile']
-        patient = get_object_or_404(Patient, patient_mobile=mobile)
-        request.session['patient'] = patient.id
-        date_dt1 = datetime.strptime(date, '%Y-%m-%d')
-        print("date_dt1:->",date_dt1)
-        booked_slots_query = Appointment.objects.all()
-        print("booked_slots_query:->",booked_slots_query)
-        booked_slots = []
-        for slot in booked_slots_query:
-            print(slot.time)
-            hour = slot.time.hour
-            min = slot.time.minute
-            print("hour:->",hour,"minutes:->",min)
-            booked_slots.append({'hour':hour, 'min':min})
-        available_slots = []
+        try:
+            date = request.GET['pick_date']
+            mobile = request.GET['mobile']
+            patient = get_object_or_404(Patient, patient_mobile=mobile)
+            request.session['patient'] = patient.id
+            date_dt1 = datetime.strptime(date, '%Y-%m-%d')
+            print("date_dt1:->",date_dt1)
+            booked_slots_query = Appointment.objects.all()
+            print("booked_slots_query:->",booked_slots_query)
+            booked_slots = []
+            for slot in booked_slots_query:
+                print(slot.time)
+                hour = slot.time.hour
+                min = slot.time.minute
+                print("hour:->",hour,"minutes:->",min)
+                booked_slots.append({'hour':hour, 'min':min})
+            available_slots = []
 
-        total_slots_count = (abs(hospital_close_at - hospital_opens_at) * (60 / test_time_in_minute))
-        print('total_slots_count', total_slots_count)
-        for i in range(int(total_slots_count)):
-            slot_hour = hospital_opens_at + i // 4
-            slot_min = 15 * (i % 4)
-            slot = {'hour':slot_hour, 'min':slot_min}
-            if slot not in booked_slots:
-                available_slots.append(slot)
-        context = {
-            'available_slots': available_slots,
-            'date_picked': True,
-            'date': date
-        }
-        return render(request, 'appointment.html', context)
+            total_slots_count = (abs(hospital_close_at - hospital_opens_at) * (60 / test_time_in_minute))
+            print('total_slots_count', total_slots_count)
+            for i in range(int(total_slots_count)):
+                slot_hour = hospital_opens_at + i // 4
+                slot_min = 15 * (i % 4)
+                slot = {'hour':slot_hour, 'min':slot_min}
+                if slot not in booked_slots:
+                    available_slots.append(slot)
+            context = {
+                'available_slots': available_slots,
+                'date_picked': True,
+                'date': date
+            }
+            return render(request, 'appointment.html', context)
+        except Exception as e:
+            print('error :->', e)
+            messages.error(request, "Please check mobile number again.")
+            return render(request, 'appointment.html')
 
 
 class TakeAppointment(LoginRequiredMixin, View):
     def post(self, request):
-        date_time = request.POST['pick_time']
-        datetime_list = date_time.split(' ')
-        date = datetime_list[1]
-        y_m_d = date.split('-')
-        year = int(y_m_d[0])
-        month = int(y_m_d[1])
-        day = int(y_m_d[2])
-        hour = int(datetime_list[0].split('-')[0])
-        min = int(datetime_list[0].split('-')[1])
-        datetime_appointment = datetime(year, month, day, hour, min)
-        patient = Patient.objects.get(id=request.session['patient'])
-        fix_appointment = Appointment.objects.create(patient=patient, time=datetime_appointment)
-        return redirect('staff')
+        try:
+            date_time = request.POST['pick_time']
+            datetime_list = date_time.split(' ')
+            date = datetime_list[1]
+            y_m_d = date.split('-')
+            year = int(y_m_d[0])
+            month = int(y_m_d[1])
+            day = int(y_m_d[2])
+            hour = int(datetime_list[0].split('-')[0])
+            min = int(datetime_list[0].split('-')[1])
+            datetime_appointment = datetime(year, month, day, hour, min)
+            patient = Patient.objects.get(id=request.session['patient'])
+            fix_appointment = Appointment.objects.create(patient=patient, time=datetime_appointment)
+            messages.success(request, f'Appointment Booked Successfully. Thank You!!!')
+            return redirect('appointmentList')
+        except Exception as e:
+            print('error :->', e)
+            messages.error(request, "Appointment is already taken for this mobile number. Thank you!!!")
+            return render(request, 'appointment.html')
+
+class AppointmentView(LoginRequiredMixin, View):
+
+    def get(self, request, *args, **kwargs):
+        appointment_list = Appointment.objects.all()
+        context = {
+            'appointment_list': appointment_list,
+        }
+        return render(request, 'covidyoddha/appointmentList.html', context)
+
+@login_required
+def AppointmentDelete(request,aid):
+    appointment = get_object_or_404(Appointment, id=aid)
+    if request.method == 'POST':
+        patient_first_name = appointment.patient.patient_first_name
+        if request.user.is_staff and request.user.is_superuser:
+            appointment.delete()
+            messages.success(request, f'Appointment for patient { patient_first_name } deleted Successfully. Thank You!!!')
+            return redirect('appointmentList')
+        else:
+            messages.warning(request, f'You do not have permission to delete this appointment. Thank You!!!')
+            return redirect('appointmentList')
+    else:
+        context = {}
+        context['appointment'] = appointment
+        return render(request, 'covidyoddha/appointmentDelete.html', context)
+
+@login_required
+def AppointmentUpdate(request, aid):
+    appointment = get_object_or_404(Appointment, id=aid)
+    booked_slots_query = Appointment.objects.all()
+    print("booked_slots_query:->", booked_slots_query)
+    booked_slots = []
+    for slot in booked_slots_query:
+        print(slot.time)
+        hour = slot.time.hour
+        min = slot.time.minute
+        print("hour:->", hour, "minutes:->", min)
+        booked_slots.append({'hour': hour, 'min': min})
+    available_slots = []
+
+    total_slots_count = (abs(hospital_close_at - hospital_opens_at) * (60 / test_time_in_minute))
+    print('total_slots_count', total_slots_count)
+    for i in range(int(total_slots_count)):
+        slot_hour = hospital_opens_at + i // 4
+        slot_min = 15 * (i % 4)
+        slot = {'hour': slot_hour, 'min': slot_min}
+        if slot not in booked_slots:
+            available_slots.append(slot)
+
+    if request.method == 'POST':
+        try:
+            date = request.POST['pick_date']
+            time = request.POST['pick_time']
+            date_list = date.split('-')
+            year = int(date_list[0])
+            month = int(date_list[1])
+            day = int(date_list[2])
+            time_list = time.split('-')
+            hour = int(time_list[0])
+            min = int(time_list[1])
+            datetime_appointment = datetime(year,month,day,hour,min)
+            print("datetime_appointment:->",datetime_appointment)
+            appointment.time = datetime_appointment
+            appointment.save()
+            messages.success(request, f'Appointment Updated Successfully. Thank You!!!')
+            return redirect('appointmentList')
+        except Exception as e:
+            print('error :->', e)
+            messages.error(request, "Something Went Wrong !!! Please try again...")
+            return render(request, 'appointment.html')
+
+    context = {
+        'appointment': appointment,
+        'available_slots': available_slots,
+    }
+
+    return render(request, 'covidyoddha/appointmentUpdate.html', context)
