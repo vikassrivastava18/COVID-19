@@ -79,7 +79,7 @@ class PatientCreationForm(ModelForm):
 
     #     Check the length of mobile number
         if len(data) < 10 or len(data) > 10:
-            raise ValidationError(_('Invalid number, please enter 10 digits'))
+            raise ValidationError(_('Invalid number, please enter 10 digits phone number'))
         return data
 
     patient_gender = forms.ChoiceField(
@@ -108,3 +108,23 @@ class ReportCreationForm(ModelForm):
             }
         )
     )
+
+    file = forms.FileField(
+        label="File for the report(only docx, pdf)",
+        widget=forms.FileInput(
+            attrs={'accept': '.pdf, .docx'}
+        )
+    )
+
+    # def clean_file(self):
+    #     data = self.cleaned_data['file']
+    #     file_name = self.cleaned_data['file'].name
+    #     data_ext = file_name.split(".")
+    #     ext = data_ext[-1]
+    #     print("data extension", ext)
+    #     if ext != 'pdf' or ext != 'docx':
+    #         raise ValidationError("please choose the right files")
+    #     return data
+
+
+

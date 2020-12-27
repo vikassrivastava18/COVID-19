@@ -18,14 +18,16 @@ from django.urls import reverse_lazy
 
 from django.contrib.auth import login, authenticate, logout
 
+
 def home(request):
     if request.method == 'POST':
         request_firstname = request.POST['firstname']
         request_lastname = request.POST['lastname']
         #request_patient_name = request_firstname + ' '+ request_lastname
         request_mobile = request.POST['inputMobile']
-        patient = Patient.objects.filter(patient_mobile=str(request_mobile)) and Patient.objects.filter(Q(patient_first_name__icontains=request_firstname)) and Patient.objects.filter(Q(patient_last_name__icontains=request_lastname)).first()
-        print(patient)
+        patient = Patient.objects.filter(patient_mobile=str(request_mobile)) and\
+                  Patient.objects.filter(Q(patient_first_name__icontains=request_firstname)) and\
+                  Patient.objects.filter(Q(patient_last_name__icontains=request_lastname)).first()
         if patient == None:
             messages.error(request, f'OPPS!, That mobile number is not registered.')
             return render(request, 'covidyoddha/home.html')
@@ -269,6 +271,7 @@ def patient_register(request):
 
     return render(request, 'covidyoddha/patient_register.html')
 
+
 def verify_patient_mobile(request):
     try:
         firstname = request.session['patient_first_name']
@@ -310,6 +313,7 @@ def verify_patient_mobile(request):
         return render(request, "covidyoddha/patient_register.html")
 
     return render(request, "covidyoddha/patient_register.html",context)
+
 
 def Logout(request):
     logout(request)
