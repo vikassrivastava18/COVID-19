@@ -1,0 +1,29 @@
+{% extends "covidyoddha/base.html" %}
+{% load static %}
+{% block content %}
+<h2 class="ml-5 mt-5">Make an appointment</h2>
+<form class="ml-5" action="{% url 'pick_time' %}" method="get">
+    <label for="mobile">Enter Mobile Number</label>
+    <input type="text" name="mobile" id="mobile">
+    <label for="pick_date">Pick a date</label>
+    <input type="date" required id="pick_date" name="pick_date">
+    <input type="submit">
+</form>
+
+{% if date_picked %}
+    <h3 class="ml-5">Select a time slot</h3>
+    <form class="ml-5" action="{% url 'take_appointment' %}" method="post">{% csrf_token %}
+        <select name="pick_time" id="pick_time">
+
+            {% for slot in available_slots %}
+                {% if slot.hour < 12 %}
+                <option value="{{ slot.hour }}-{{ slot.min }} {{ date }}">{{ slot.hour }} : {{ slot.min }} am</option>
+                {% else %}
+                <option value="{{ slot.hour }}-{{ slot.min }} {{ date }}">{{ slot.hour }} : {{ slot.min }} pm</option>
+                {% endif %}
+            {% endfor %}
+        </select>
+        <input type="submit">
+    </form>
+{% endif %}
+{% endblock %}
